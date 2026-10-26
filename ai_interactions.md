@@ -1,40 +1,19 @@
 # AI Interactions Log
 
-> **Stretch features only.** Only fill in the sections that apply to stretch features you attempted. If you did not attempt a stretch feature, leave its section blank or delete it. This file is not required for the core project.
-
----
-
 ## Agent Workflow (SF7)
 
-> Document your experience using an AI agent (e.g., Cursor Agent, Claude, Copilot) to make multi-step changes autonomously.
+### What I asked the agent to do
 
-**What task did you give the agent?**
+I asked the agent to inspect the existing PawPal+ starter, retain its Streamlit app, implement the required `Task`, `Pet`, `Owner`, and `Scheduler` classes, connect them to the app, add tests, persistence, UML, documentation, and run the required verification commands.
 
-<!-- Describe the goal you asked the agent to accomplish -->
+### What the agent completed
 
-**What did the agent do?**
+The agent modified `pawpal_system.py`, `main.py`, `app.py`, `tests/test_pawpal.py`, `diagrams/uml.mmd`, `README.md`, `reflection.md`, and this file. It added multi-pet task storage, due-time sorting, pet/completion filtering, overlap detection, daily/weekly recurrence, JSON save/load, the CLI schedule demonstration, and a Streamlit UI using `st.session_state`. It installed only the packages in `requirements.txt` and ran `python main.py`, `python -m pytest`, a compilation check, and an import check.
 
-<!-- List the steps the agent took (files edited, commands run, etc.) -->
+### What I had to verify or fix manually
 
-**What did you have to verify or fix manually?**
+I need to review the Streamlit interaction in a browser and decide whether the documented design tradeoffs match my own reasoning
 
-<!-- Describe anything the agent got wrong or that required human review -->
 
----
 
-## Prompt Comparison (SF11)
 
-> Compare two different prompts (or two different models) on the same task.
-
-| | Option A | Option B |
-|-|----------|----------|
-| **Model / tool used** | | |
-| **Prompt** | | |
-| **Response summary** | | |
-| **What was useful** | | |
-| **Problems noticed** | | |
-| **Decision** | | |
-
-**Which approach did you use in your final implementation and why?**
-
-<!-- Your conclusion -->

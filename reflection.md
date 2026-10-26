@@ -2,70 +2,55 @@
 
 ## 1. System Design
 
-**a. Initial design**
+### Initial design
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+I used four classes: `Task` for a timed care item, `Pet` for its identifying data and task list, `Owner` for the collection of pets, and `Scheduler` for cross-pet scheduling. The UML source in `diagrams/uml.mmd` records those relationships.
 
-**b. Design changes**
+### Design changes
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
-
----
+The starter had no backend classes. During implementation I added `due_at` as one datetime rather than separate date and time fields, because sorting and overlap checks both need a comparable timestamp. I also added `recurrence` to `Task` and create a dated occurrence when a schedule is requested, which avoids storing a separate copy of a daily task for every date.
 
 ## 2. Scheduling Logic and Tradeoffs
 
-**a. Constraints and priorities**
+### Constraints and priorities
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+The scheduler uses due time, task duration, completion state, pet name, and recurrence. It sorts by due time and shows priority in the output; priority is stored for the owner’s decision rather than used to reorder a task past its selected time.
 
-**b. Tradeoffs**
+### Tradeoffs
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
-
----
+When two tasks overlap, the app reports a warning instead of automatically moving one. That is reasonable here because automatic changes could make a medication or feeding task late without the owner noticing.
 
 ## 3. AI Collaboration
 
-**a. How you used AI**
+### How I used AI
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I have used it to structure my mplementation plan and the command-based verification.
 
-**b. Judgment and verification**
+### Judgment and verification
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
-
----
+I  used `python main.py`, `python -m pytest`, compilation, and imports to check the code. I also chose conflict warnings rather than an unrequested auto-rescheduling rule.
 
 ## 4. Testing and Verification
 
-**a. What you tested**
+### What I tested
 
-- What behaviors did you test?
-- Why were these tests important?
+The tests confirm that a pet receives a task, `mark_complete()` changes its state, completed tasks can be omitted, cross-pet tasks are time-sorted, filtering finds a requested pet’s tasks, weekly recurrence creates an occurrence on the matching weekday, and overlap detection finds a conflict.
 
-**b. Confidence**
+### Confidence
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
-
----
+I have high confidence in the tested workflow because the final test run passed and the CLI demo printed the expected ordered schedule and warning. I would next test JSON save/load, same-time task boundaries, invalid inputs, and dates before a recurring task begins.
 
 ## 5. Reflection
 
-**a. What went well**
+### What went well
 
-- What part of this project are you most satisfied with?
+The project now has one consistent model shared by the CLI, tests, and Streamlit UI, rather than separate implementations of the same rules.
 
-**b. What you would improve**
+### What I would improve
 
-- If you had another iteration, what would you improve or redesign?
+A future iteration could let owners mark a task complete in the UI, edit or delete tasks, choose the displayed date, and add an explicit availability window.
 
-**c. Key takeaway**
+### Key takeaway
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+Keeping schedule logic in a small tested module made it possible to reuse the same behavior in the command-line demo and the UI.
+
